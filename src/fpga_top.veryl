@@ -1,0 +1,34 @@
+module TAPControllerFPGATop (
+    // Physical reset on board
+    rst: input reset_async_low,
+    // JTAG Clock
+    TCK: input clock,
+    // JTAG IO
+    TMS: input logic,
+    // JTAG State states
+    led0: output logic,
+    led1: output logic,
+    led2: output logic,
+    led3: output logic,
+) {
+    var tap_controller_state: logic<4>;
+    inst tap_controller: TAPController (
+        // Physical reset on board
+        rst  ,
+        // JTAG Clock
+        TCK  ,
+        // JTAG IO
+        TMS  ,
+        // JTAG State states
+        SDR  : _                   ,
+        SIR  : _                   ,
+        UIR  : _                   ,
+        CDR  : _                   ,
+        UDR  : _                   ,
+        state: tap_controller_state,
+    );
+    assign led0 = tap_controller_state[0];
+    assign led1 = tap_controller_state[1];
+    assign led2 = tap_controller_state[2];
+    assign led3 = tap_controller_state[3];
+}
